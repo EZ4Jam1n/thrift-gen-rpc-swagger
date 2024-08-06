@@ -1,17 +1,3 @@
-// Copyright 2020 Google LLC. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//    http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 /*
  * Copyright 2024 CloudWeGo Authors
  *
@@ -26,6 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Copyright 2020 Google LLC. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * This file may have been modified by CloudWeGo authors. All CloudWeGo
+ * Modifications are Copyright 2024 CloudWeGo Authors.
  */
 
 package openapi
@@ -57,7 +60,7 @@ func (m *AdditionalPropertiesItem) ToRawInfo() *yaml.Node {
 	}
 	// {Name:boolean Type:bool StringEnumValues:[] MapType: Repeated:false Pattern: Implicit:false Description:}
 	v1 := m.Boolean
-	if v1 != false {
+	if v1 {
 		return compiler.NewScalarNodeForBool(v1)
 	}
 	return compiler.NewNullNode()
@@ -232,7 +235,7 @@ func (m *DefaultType) ToRawInfo() *yaml.Node {
 	if m.Number != 0 {
 		return compiler.NewScalarNodeForFloat(m.Number)
 	}
-	if m.Boolean != false {
+	if m.Boolean {
 		return compiler.NewScalarNodeForBool(m.Boolean)
 	}
 	if m.String_ != "" {
@@ -337,11 +340,11 @@ func (m *Encoding) ToRawInfo() *yaml.Node {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("style"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForString(m.Style))
 	}
-	if m.Explode != false {
+	if m.Explode {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("explode"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.Explode))
 	}
-	if m.AllowReserved != false {
+	if m.AllowReserved {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("allowReserved"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.AllowReserved))
 	}
@@ -479,15 +482,15 @@ func (m *Header) ToRawInfo() *yaml.Node {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("description"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForString(m.Description))
 	}
-	if m.Required != false {
+	if m.Required {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("required"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.Required))
 	}
-	if m.Deprecated != false {
+	if m.Deprecated {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("deprecated"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.Deprecated))
 	}
-	if m.AllowEmptyValue != false {
+	if m.AllowEmptyValue {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("allowEmptyValue"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.AllowEmptyValue))
 	}
@@ -495,11 +498,11 @@ func (m *Header) ToRawInfo() *yaml.Node {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("style"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForString(m.Style))
 	}
-	if m.Explode != false {
+	if m.Explode {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("explode"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.Explode))
 	}
-	if m.AllowReserved != false {
+	if m.AllowReserved {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("allowReserved"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.AllowReserved))
 	}
@@ -1109,7 +1112,7 @@ func (m *Operation) ToRawInfo() *yaml.Node {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("callbacks"))
 		info.Content = append(info.Content, m.Callbacks.ToRawInfo())
 	}
-	if m.Deprecated != false {
+	if m.Deprecated {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("deprecated"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.Deprecated))
 	}
@@ -1154,15 +1157,15 @@ func (m *Parameter) ToRawInfo() *yaml.Node {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("description"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForString(m.Description))
 	}
-	if m.Required != false {
+	if m.Required {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("required"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.Required))
 	}
-	if m.Deprecated != false {
+	if m.Deprecated {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("deprecated"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.Deprecated))
 	}
-	if m.AllowEmptyValue != false {
+	if m.AllowEmptyValue {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("allowEmptyValue"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.AllowEmptyValue))
 	}
@@ -1170,11 +1173,11 @@ func (m *Parameter) ToRawInfo() *yaml.Node {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("style"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForString(m.Style))
 	}
-	if m.Explode != false {
+	if m.Explode {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("explode"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.Explode))
 	}
-	if m.AllowReserved != false {
+	if m.AllowReserved {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("allowReserved"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.AllowReserved))
 	}
@@ -1394,7 +1397,7 @@ func (m *RequestBody) ToRawInfo() *yaml.Node {
 	// always include this required field.
 	info.Content = append(info.Content, compiler.NewScalarNodeForString("content"))
 	info.Content = append(info.Content, m.Content.ToRawInfo())
-	if m.Required != false {
+	if m.Required {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("required"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.Required))
 	}
@@ -1517,7 +1520,7 @@ func (m *Schema) ToRawInfo() *yaml.Node {
 	if m == nil {
 		return info
 	}
-	if m.Nullable != false {
+	if m.Nullable {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("nullable"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.Nullable))
 	}
@@ -1525,11 +1528,11 @@ func (m *Schema) ToRawInfo() *yaml.Node {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("discriminator"))
 		info.Content = append(info.Content, m.Discriminator.ToRawInfo())
 	}
-	if m.ReadOnly != false {
+	if m.ReadOnly {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("readOnly"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.ReadOnly))
 	}
-	if m.WriteOnly != false {
+	if m.WriteOnly {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("writeOnly"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.WriteOnly))
 	}
@@ -1545,7 +1548,7 @@ func (m *Schema) ToRawInfo() *yaml.Node {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("example"))
 		info.Content = append(info.Content, m.Example.ToRawInfo())
 	}
-	if m.Deprecated != false {
+	if m.Deprecated {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("deprecated"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.Deprecated))
 	}
@@ -1561,7 +1564,7 @@ func (m *Schema) ToRawInfo() *yaml.Node {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("maximum"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForFloat(m.Maximum))
 	}
-	if m.ExclusiveMaximum != false {
+	if m.ExclusiveMaximum {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("exclusiveMaximum"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.ExclusiveMaximum))
 	}
@@ -1569,7 +1572,7 @@ func (m *Schema) ToRawInfo() *yaml.Node {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("minimum"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForFloat(m.Minimum))
 	}
-	if m.ExclusiveMinimum != false {
+	if m.ExclusiveMinimum {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("exclusiveMinimum"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.ExclusiveMinimum))
 	}
@@ -1593,7 +1596,7 @@ func (m *Schema) ToRawInfo() *yaml.Node {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("minItems"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForInt(m.MinItems))
 	}
-	if m.UniqueItems != false {
+	if m.UniqueItems {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("uniqueItems"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.UniqueItems))
 	}
@@ -1699,11 +1702,11 @@ func (m *SchemaOrReference) ToRawInfo() *yaml.Node {
 	// SchemaOrReference
 	// {Name:schema Type:Schema StringEnumValues:[] MapType: Repeated:false Pattern: Implicit:false Description:}
 
-	if m.IsSetSchema() == true {
+	if m.IsSetSchema() {
 		return m.GetSchema().ToRawInfo()
 	}
 	// {Name:reference Type:Reference StringEnumValues:[] MapType: Repeated:false Pattern: Implicit:false Description:}
-	if m.IsSetReference() == true {
+	if m.IsSetReference() {
 		return m.GetReference().ToRawInfo()
 	}
 	return compiler.NewNullNode()
@@ -1892,7 +1895,7 @@ func (m *SpecificationExtension) ToRawInfo() *yaml.Node {
 		return compiler.NewScalarNodeForFloat(m.Number)
 	}
 
-	if m.Boolean != false {
+	if m.Boolean {
 		return compiler.NewScalarNodeForBool(m.Boolean)
 	}
 
@@ -1961,11 +1964,11 @@ func (m *Xml) ToRawInfo() *yaml.Node {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("prefix"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForString(m.Prefix))
 	}
-	if m.Attribute != false {
+	if m.Attribute {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("attribute"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.Attribute))
 	}
-	if m.Wrapped != false {
+	if m.Wrapped {
 		info.Content = append(info.Content, compiler.NewScalarNodeForString("wrapped"))
 		info.Content = append(info.Content, compiler.NewScalarNodeForBool(m.Wrapped))
 	}

@@ -1,3 +1,19 @@
+/*
+ * Copyright 2024 CloudWeGo Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package generator
 
 import (
@@ -12,18 +28,20 @@ import (
 )
 
 type ServerGenerator struct {
-	IdlPath  string
-	HostPort string
+	IdlPath   string
+	HostPort  string
+	OutputDir string
 }
 
 func NewServerGenerator(ast *parser.Thrift, args *args.Arguments) *ServerGenerator {
 	return &ServerGenerator{
-		IdlPath:  ast.Filename,
-		HostPort: args.HostPort,
+		IdlPath:   ast.Filename,
+		HostPort:  args.HostPort,
+		OutputDir: args.OutputDir,
 	}
 }
 
-func (g *ServerGenerator) Generate(args *args.Arguments) []*plugin.Generated {
+func (g *ServerGenerator) Generate() []*plugin.Generated {
 	tmpl, err := template.New("server").Delims("{{", "}}").Parse(serverTemplate)
 	if err != nil {
 		fmt.Sprintf("failed to parse template: %v", err)
@@ -35,8 +53,9 @@ func (g *ServerGenerator) Generate(args *args.Arguments) []*plugin.Generated {
 		fmt.Sprintf("failed to execute template: %v", err)
 	}
 
-	filePath := filepath.Clean(args.OutputDir)
+	filePath := filepath.Clean(g.OutputDir)
 	filePath = filepath.Join(filePath, "swagger.go")
+
 	var ret []*plugin.Generated
 	ret = append(ret, &plugin.Generated{
 		Content: buf.String(),
