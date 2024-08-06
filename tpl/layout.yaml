@@ -1,0 +1,6 @@
+layouts:
+  - path: swagger.go
+    delims:
+      - "{{"
+      - "}}"
+    body:
