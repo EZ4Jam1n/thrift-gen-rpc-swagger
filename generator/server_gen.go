@@ -73,6 +73,7 @@ import (
 	_ "embed"
 	"encoding/json"
 	"net/http"
+	"strings"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -222,6 +223,7 @@ func main() {
 
 		ctx.Data(int(realResp.StatusCode), string(realResp.ContentType), respBody)
 	})
+
 	h.Spin()
 }
 `

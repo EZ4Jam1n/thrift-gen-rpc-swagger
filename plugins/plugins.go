@@ -58,7 +58,7 @@ func handleRequest(req *plugin.Request) (err error) {
 		log.Printf("[Error]: unpack args failed: %s", err.Error())
 		return err
 	}
-
+	fmt.Fprintf(os.Stderr, "args: %+v\n", args)
 	if req == nil {
 		fmt.Fprintf(os.Stderr, "unexpected nil request")
 	}

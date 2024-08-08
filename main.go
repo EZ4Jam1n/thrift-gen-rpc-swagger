@@ -27,7 +27,7 @@ func main() {
 	var queryVersion bool
 
 	f := flag.NewFlagSet(os.Args[0], flag.ContinueOnError)
-	f.BoolVar(&queryVersion, "version", false, "Show the version of thrift-gen-http-swagger")
+	f.BoolVar(&queryVersion, "version", false, "Show the version of thrift-gen-rpc-swagger")
 
 	if err := f.Parse(os.Args[1:]); err != nil {
 		println(err)
