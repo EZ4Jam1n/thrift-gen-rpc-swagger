@@ -2,35 +2,6 @@ namespace go example
 
 include "openapi.thrift"
 
-// Hello - request
-struct FormReq {
-    1: string FormValue (
-        api.form = "form1",
-        openapi.property = '{
-            title: "this is an override field schema title",
-            max_length: 255
-        }'
-    )
-
-    2: InnerForm FormValue1 (
-        api.form = "form3"
-    )
-}(
-    openapi.schema = '{
-          title: "Hello - request",
-          description: "Hello - request",
-          required: [
-             "form1"
-          ]
-       }'
-)
-
-struct InnerForm {
-        1: string InnerFormValue(
-                api.form = "form2"
-            )
-    }
-
 // QueryReq
 struct QueryReq {
     1: string QueryValue (
@@ -46,11 +17,8 @@ struct QueryReq {
             max_length: 50
         }'
     )
-    6: list<string> items (
+    2: list<string> items (
         api.query = "items"
-    )
-    7: map<string, string> strings_map (
-        api.query = "query1"
     )
 }
 
@@ -71,24 +39,6 @@ struct BodyReq {
     //field: query描述
     2: string QueryValue (
         api.query = "query2"
-    )
-    //field: body1描述
-    3: string Body1Value (
-        api.body = "body1"
-    )
-}
-
-// HelloReq
-struct HelloReq {
-    1: string Name (
-        api.query = "name",
-        openapi.property = '{
-            title: "Name",
-            description: "Name",
-            type: "string",
-            min_length: 1,
-            max_length: 50
-        }'
     )
 }
 
@@ -128,10 +78,6 @@ service HelloService1 {
         api.get = "/hello1"
     )
 
-    HelloResp FormMethod(1: FormReq req) (
-        api.post = "/form"
-    )
-
     HelloResp PathMethod(1: PathReq req) (
         api.get = "/path:path1"
     )
@@ -140,7 +86,7 @@ service HelloService1 {
         api.post = "/body"
     )
 }(
-    api.base_domain = "127.0.0.1:8888",
+    api.base_domain = "127.0.0.1:8080",
     openapi.document = '{
        info: {
           title: "example swagger doc",
@@ -148,15 +94,3 @@ service HelloService1 {
        }
     }'
 )
-
-// HelloService2描述
-service HelloService2 {
-    HelloResp QueryMethod(1: QueryReq req) (
-        api.get = "/hello2"
-        api.baseurl = "127.0.0.1:8889"
-        openapi.operation = '{
-            summary: "Hello - Get",
-            description: "Hello - Get"
-        }'
-    )
-}

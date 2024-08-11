@@ -17,7 +17,6 @@
 package plugins
 
 import (
-	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -27,8 +26,6 @@ import (
 	"github.com/hertz-contrib/swagger-generate/thrift-gen-rpc-swagger/args"
 	"github.com/hertz-contrib/swagger-generate/thrift-gen-rpc-swagger/generator"
 )
-
-var flags flag.FlagSet
 
 func Run() int {
 	data, err := io.ReadAll(os.Stdin)
@@ -58,7 +55,7 @@ func handleRequest(req *plugin.Request) (err error) {
 		log.Printf("[Error]: unpack args failed: %s", err.Error())
 		return err
 	}
-	fmt.Fprintf(os.Stderr, "args: %+v\n", args)
+
 	if req == nil {
 		fmt.Fprintf(os.Stderr, "unexpected nil request")
 	}

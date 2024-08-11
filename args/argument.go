@@ -24,7 +24,8 @@ import (
 
 type Arguments struct {
 	OutputDir string
-	HostPort  string
+	HertzAddr string
+	KitexAddr string
 }
 
 func (a *Arguments) Unpack(args []string) error {

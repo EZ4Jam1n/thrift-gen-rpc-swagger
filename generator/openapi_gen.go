@@ -94,11 +94,15 @@ func (g *OpenAPIGenerator) BuildDocument(arguments *args.Arguments) []*plugin.Ge
 	var extDocument *openapi.Document
 	err := g.getDocumentOption(&extDocument)
 	if err != nil {
-		fmt.Printf("Error getting document option: %s\n", err)
+		logs.Errorf("Error getting document option: %s", err)
 		return nil
 	}
 	if extDocument != nil {
-		utils.MergeStructs(d, extDocument)
+		err := utils.MergeStructs(d, extDocument)
+		if err != nil {
+			logs.Errorf("Error merging document option: %s", err)
+			return nil
+		}
 	}
 
 	g.addPathsToDocument(d, g.ast.Services)
@@ -285,7 +289,10 @@ func (g *OpenAPIGenerator) addPathsToDocument(d *openapi.Document, services []*p
 					if err != nil {
 						logs.Errorf("Error parsing method option: %s", err)
 					}
-					utils.MergeStructs(op, newOp)
+					err = utils.MergeStructs(op, newOp)
+					if err != nil {
+						logs.Errorf("Error merging method option: %s", err)
+					}
 					g.addOperationToDocument(d, op, path2, methodName)
 				}
 			}
@@ -330,7 +337,10 @@ func (g *OpenAPIGenerator) buildOperation(
 					if err != nil {
 						logs.Errorf("Error parsing field option: %s", err)
 					}
-					utils.MergeStructs(fieldSchema.Schema, newFieldSchema)
+					err = utils.MergeStructs(fieldSchema.Schema, newFieldSchema)
+					if err != nil {
+						logs.Errorf("Error merging field option: %s", err)
+					}
 				}
 			}
 		}
@@ -348,7 +358,10 @@ func (g *OpenAPIGenerator) buildOperation(
 					if err != nil {
 						logs.Errorf("Error parsing field option: %s", err)
 					}
-					utils.MergeStructs(fieldSchema.Schema, newFieldSchema)
+					err = utils.MergeStructs(fieldSchema.Schema, newFieldSchema)
+					if err != nil {
+						logs.Errorf("Error merging field option: %s", err)
+					}
 				}
 				required = true
 			}
@@ -367,7 +380,10 @@ func (g *OpenAPIGenerator) buildOperation(
 					if err != nil {
 						logs.Errorf("Error parsing field option: %s", err)
 					}
-					utils.MergeStructs(fieldSchema.Schema, newFieldSchema)
+					err = utils.MergeStructs(fieldSchema.Schema, newFieldSchema)
+					if err != nil {
+						logs.Errorf("Error merging field option: %s", err)
+					}
 				}
 			}
 		}
@@ -385,7 +401,10 @@ func (g *OpenAPIGenerator) buildOperation(
 					if err != nil {
 						logs.Errorf("Error parsing field option: %s", err)
 					}
-					utils.MergeStructs(fieldSchema.Schema, newFieldSchema)
+					err = utils.MergeStructs(fieldSchema.Schema, newFieldSchema)
+					if err != nil {
+						logs.Errorf("Error merging field option: %s", err)
+					}
 				}
 			}
 		}
@@ -403,7 +422,10 @@ func (g *OpenAPIGenerator) buildOperation(
 		if err != nil {
 			logs.Errorf("Error parsing field option: %s", err)
 		}
-		utils.MergeStructs(parameter, extParameter)
+		err = utils.MergeStructs(parameter, extParameter)
+		if err != nil {
+			logs.Errorf("Error merging field option: %s", err)
+		}
 
 		// Append the parameter to the parameters array if it was set
 		if paramName != "" && paramIn != "" {
@@ -440,11 +462,20 @@ func (g *OpenAPIGenerator) buildOperation(
 					},
 				},
 			})
+
+			additionalProperties = append(additionalProperties, &openapi.NamedMediaType{
+				Name: "application/x-www-form-urlencoded",
+				Value: &openapi.MediaType{
+					Schema: &openapi.SchemaOrReference{
+						Schema: formSchema,
+					},
+				},
+			})
 		}
 
 		if len(rawBodySchema.Properties.AdditionalProperties) > 0 {
 			additionalProperties = append(additionalProperties, &openapi.NamedMediaType{
-				Name: "application/octet-stream",
+				Name: "text/plain",
 				Value: &openapi.MediaType{
 					Schema: &openapi.SchemaOrReference{
 						Schema: rawBodySchema,
@@ -596,7 +627,7 @@ func (g *OpenAPIGenerator) getResponseForStruct(d *openapi.Document, desc *thrif
 		ref := "#/components/schemas/" + desc.GetName() + "RawBody"
 		g.addSchemaToDocument(d, refSchema)
 		additionalProperties = append(additionalProperties, &openapi.NamedMediaType{
-			Name: "application/octet-stream",
+			Name: "text/plain",
 			Value: &openapi.MediaType{
 				Schema: &openapi.SchemaOrReference{
 					Reference: &openapi.Reference{Xref: ref},
@@ -655,7 +686,10 @@ func (g *OpenAPIGenerator) getSchemaByOption(inputDesc *thrift_reflection.Struct
 				if err != nil {
 					logs.Errorf("Error parsing field option: %s", err)
 				}
-				utils.MergeStructs(fieldSchema.Schema, newFieldSchema)
+				err = utils.MergeStructs(fieldSchema.Schema, newFieldSchema)
+				if err != nil {
+					logs.Errorf("Error merging field option: %s", err)
+				}
 			}
 
 			definitionProperties.AdditionalProperties = append(
@@ -674,7 +708,10 @@ func (g *OpenAPIGenerator) getSchemaByOption(inputDesc *thrift_reflection.Struct
 	}
 
 	if extSchema != nil {
-		utils.MergeStructs(schema, extSchema)
+		err := utils.MergeStructs(schema, extSchema)
+		if err != nil {
+			logs.Errorf("Error merging struct option: %s", err)
+		}
 	}
 
 	schema.Required = required
@@ -758,7 +795,10 @@ func (g *OpenAPIGenerator) addSchemasForStructsToDocument(d *openapi.Document, s
 				if err != nil {
 					logs.Errorf("Error parsing field option: %s", err)
 				}
-				utils.MergeStructs(fieldSchema.Schema, newFieldSchema)
+				err = utils.MergeStructs(fieldSchema.Schema, newFieldSchema)
+				if err != nil {
+					logs.Errorf("Error merging field option: %s", err)
+				}
 			}
 
 			extName := field.GetName()
@@ -790,7 +830,10 @@ func (g *OpenAPIGenerator) addSchemasForStructsToDocument(d *openapi.Document, s
 			logs.Errorf("Error parsing struct option: %s", err)
 		}
 		if extSchema != nil {
-			utils.MergeStructs(schema, extSchema)
+			err = utils.MergeStructs(schema, extSchema)
+			if err != nil {
+				logs.Errorf("Error merging struct option: %s", err)
+			}
 		}
 
 		// Add the schema to the components.schema list.
